@@ -1,12 +1,26 @@
 import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Post, Query, Redirect, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
+import { Connection } from '../connection/connection';
+import { Mail } from '../mail/mail';
 
 @Controller('/api/users')
 export class UserController {
     constructor(
         private service: UserService,
+        private connection: Connection,
+        private mailService: Mail
     ){}
+
+    @Get("learn-dependency-injection3")
+    learnDependencyInjection3(){
+        this.mailService.send();
+    }
+
+    @Get("learn-dependency-injection2")
+    learnDependencyInjection2(){
+        return this.connection.getName();
+    }
 
     @Get("learn-dependency-injection1")
     learnDependencyInjection1(name:string): string{
