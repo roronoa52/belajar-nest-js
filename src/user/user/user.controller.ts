@@ -23,10 +23,10 @@ export class UserController {
     }
 
     @Get()
-    getByQuery(
+    async getByQuery(
         @Query("first_name") firstName:string,
         @Query("last_name") lastName:string,
-    ): string{
+    ): Promise<string>{
 
         return `Hi ${firstName} ${lastName}`;
     }
