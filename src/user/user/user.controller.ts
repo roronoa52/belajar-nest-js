@@ -1,8 +1,17 @@
 import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Post, Query, Redirect, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { UserService } from './user.service';
 
 @Controller('/api/users')
 export class UserController {
+    constructor(
+        private service: UserService,
+    ){}
+
+    @Get("learn-dependency-injection1")
+    learnDependencyInjection1(name:string): string{
+        return this.service.sayHello(name);
+    }
 
     @Get("/set-cookie")
     SetCookie(@Query("name") name:string, @Res() response:Response){

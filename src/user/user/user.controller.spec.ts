@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
 import * as httpMocks from 'node-mocks-http';
+import { UserService } from './user.service';
 
 describe('UserController', () => {
   let controller: UserController;
@@ -8,6 +9,7 @@ describe('UserController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
+      providers: [UserService]
     }).compile();
 
     controller = module.get<UserController>(UserController);
@@ -32,5 +34,10 @@ describe('UserController', () => {
     const result = controller.GetCookie(mockRequest)
 
     expect(result).toBe("Cookie value is farhan yudha pratama")
+  })
+
+  it("Should return 'yp'", () => {
+    const response = controller.learnDependencyInjection1('yp')
+    expect(response).toBe('Hello yp!')
   })
 });
