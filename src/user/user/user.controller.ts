@@ -1,4 +1,18 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 
-@Controller('user')
-export class UserController {}
+@Controller('/api/users')
+export class UserController {
+
+    @Post()
+    post(): string{
+
+        return "ini post";
+    }
+
+    @Get("/helloworld")
+    get(): string{
+
+        return "ini helloworld";
+    }
+
+}
