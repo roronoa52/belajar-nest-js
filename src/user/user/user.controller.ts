@@ -1,8 +1,26 @@
-import { Controller, Get, Post, Query, Req } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Post, Query, Redirect, Req } from '@nestjs/common';
 import { Request } from 'express';
 
 @Controller('/api/users')
 export class UserController {
+
+    @Get("/sample-response")
+    @Header("Content-Type", "application/json")
+    @HttpCode(200)
+    sampleResponse(): Record<string, string>{
+        return{
+            "data": "Hello World"
+        }
+    }
+
+    @Get("/redirect")
+    @Redirect("/sample-response")
+    sampleRedirect(): HttpRedirectResponse{
+        return{
+            url:"sample-response",
+            statusCode: 301
+        }
+    }
 
     @Get()
     getByQuery(
