@@ -3,14 +3,22 @@ import { Request, Response } from 'express';
 import { UserService } from './user.service';
 import { Connection } from '../connection/connection';
 import { Mail } from '../mail/mail';
+import { UserRepository } from '../user-repository/user-repository';
 
 @Controller('/api/users')
 export class UserController {
     constructor(
         private service: UserService,
         private connection: Connection,
-        private mailService: Mail
+        private mailService: Mail,
+        private UserRepository: UserRepository
     ){}
+
+    @Get("learn-dependency-injection4")
+    learnDependencyInjection4(){
+        this.UserRepository.save();
+        return this.connection.getName();
+    }
 
     @Get("learn-dependency-injection3")
     learnDependencyInjection3(){
