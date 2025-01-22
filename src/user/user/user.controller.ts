@@ -23,7 +23,6 @@ export class UserController {
     @Get("/create")
     async createUser(@Query("first_name") firstName:string, @Query("last_name") lastName:string){
         return await this.UserRepository.save(firstName, lastName);
-
     }
 
     @Get("learn-dependency-injection4")
