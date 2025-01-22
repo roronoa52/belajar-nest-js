@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpCode, HttpRedirectResponse, ParseIntPipe, Post, Query, Redirect, Req, Res, UseFilters } from '@nestjs/common';
+import { Body, Controller, Get, Header, HttpCode, HttpRedirectResponse, ParseIntPipe, Post, Query, Redirect, Req, Res, UseFilters } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
 import { Connection } from '../connection/connection';
@@ -7,6 +7,8 @@ import { UserRepository } from '../user-repository/user-repository';
 import { User } from '@prisma/client';
 import { filter } from 'rxjs';
 import { ValidationFilter } from 'src/validation/validation.filter';
+import { LoginUserRequest, LoginUserRequestValidation } from 'src/model/login.model';
+import { ValidationPipe } from 'src/validation/validation.pipe';
 
 @Controller('/api/users')
 export class UserController {
@@ -16,6 +18,12 @@ export class UserController {
         private mailService: Mail,
         private UserRepository: UserRepository
     ){}
+
+    @Post("/login")
+    @UseFilters(ValidationFilter)
+    login(@Body(new ValidationPipe(LoginUserRequestValidation)) request:LoginUserRequest){
+        return `Hi ${request.username}`
+    }
 
     @Get("/validation-sayhello")
     @UseFilters(ValidationFilter)
