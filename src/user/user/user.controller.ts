@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Header, HttpCode, HttpRedirectResponse, ParseIntPipe, Post, Query, Redirect, Req, Res, UseFilters } from '@nestjs/common';
+import { Body, Controller, Get, Header, HttpCode, HttpRedirectResponse, ParseIntPipe, Post, Query, Redirect, Req, Res, UseFilters, UseGuards } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
 import { Connection } from '../connection/connection';
@@ -10,6 +10,7 @@ import { ValidationFilter } from 'src/validation/validation.filter';
 import { LoginUserRequest, LoginUserRequestValidation } from 'src/model/login.model';
 import { ValidationPipe } from 'src/validation/validation.pipe';
 import { Auth } from 'src/auth/auth.decorator';
+import { RoleGuard } from 'src/role/role.guard';
 
 @Controller('/api/users')
 export class UserController {
@@ -21,6 +22,7 @@ export class UserController {
     ){}
 
     @Get("/current")
+    @UseGuards(new RoleGuard(['admin', 'operator']))
     current(@Auth() user: User): Record<string, any>{
         return{
             "data": `Hello ${user.firstName} ${user.lastName}`
