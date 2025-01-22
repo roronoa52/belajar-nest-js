@@ -9,6 +9,7 @@ import { filter } from 'rxjs';
 import { ValidationFilter } from 'src/validation/validation.filter';
 import { LoginUserRequest, LoginUserRequestValidation } from 'src/model/login.model';
 import { ValidationPipe } from 'src/validation/validation.pipe';
+import { Auth } from 'src/auth/auth.decorator';
 
 @Controller('/api/users')
 export class UserController {
@@ -18,6 +19,13 @@ export class UserController {
         private mailService: Mail,
         private UserRepository: UserRepository
     ){}
+
+    @Get("/current")
+    current(@Auth() user: User): Record<string, any>{
+        return{
+            "data": `Hello ${user.firstName} ${user.lastName}`
+        }
+    }
 
     @Post("/login")
     @UseFilters(ValidationFilter)
