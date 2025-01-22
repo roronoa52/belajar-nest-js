@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Post, Query, Redirect, Req, Res, UseFilters } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, HttpRedirectResponse, ParseIntPipe, Post, Query, Redirect, Req, Res, UseFilters } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
 import { Connection } from '../connection/connection';
@@ -87,10 +87,10 @@ export class UserController {
         return `Hi ${firstName} ${lastName}`;
     }
 
-    @Get("/:id")
-    getById(@Req() request:Request): string{
+    @Get("/id")
+    getById(@Query('id', ParseIntPipe) id:Request): string{
 
-        return `Get user with id ${request.params.id}`;
+        return `Get user with id ${id}`;
     }
 
     @Post()
