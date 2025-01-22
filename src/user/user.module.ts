@@ -6,6 +6,7 @@ import { Mail, mailService } from './mail/mail';
 import { UserRepository } from './user-repository/user-repository';
 import { ConfigService } from '@nestjs/config';
 import { PrismaClient } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma/prisma.service';
 
 @Module({
   imports: [],
@@ -22,7 +23,7 @@ import { PrismaClient } from '@prisma/client';
       useValue: mailService
     },
     UserRepository,
-    PrismaClient
+    PrismaService
   ]
 })
 export class UserModule {}
