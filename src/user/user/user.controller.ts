@@ -15,6 +15,11 @@ export class UserController {
         private UserRepository: UserRepository
     ){}
 
+    @Get("/validation-sayhello")
+    sayHello(@Query("name") name:string): string{
+        return this.service.sayHello(name);
+    }
+
     @Get("/create")
     async createUser(@Query("first_name") firstName:string, @Query("last_name") lastName:string){
         return await this.UserRepository.save(firstName, lastName);

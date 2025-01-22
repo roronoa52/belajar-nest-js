@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
+import { ValidationModule } from './validation/validation.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { PrismaModule } from './prisma/prisma.module';
     isGlobal: true
   }),
   UserModule,
-  PrismaModule
+  PrismaModule,
+  ValidationModule.forRoot(true)
 ],
   controllers: [AppController],
   providers: [AppService],
