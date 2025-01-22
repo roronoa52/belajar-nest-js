@@ -1,10 +1,12 @@
-import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Post, Query, Redirect, Req, Res } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Post, Query, Redirect, Req, Res, UseFilters } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
 import { Connection } from '../connection/connection';
 import { Mail } from '../mail/mail';
 import { UserRepository } from '../user-repository/user-repository';
 import { User } from '@prisma/client';
+import { filter } from 'rxjs';
+import { ValidationFilter } from 'src/validation/validation.filter';
 
 @Controller('/api/users')
 export class UserController {
@@ -16,6 +18,7 @@ export class UserController {
     ){}
 
     @Get("/validation-sayhello")
+    @UseFilters(ValidationFilter)
     sayHello(@Query("name") name:string): string{
         return this.service.sayHello(name);
     }
