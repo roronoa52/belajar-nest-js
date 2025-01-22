@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Connection } from '../connection/connection';
+import { PrismaClient, User } from '@prisma/client';
 
+@Injectable()
 export class UserRepository {
-    connection:Connection
+    constructor(private prismaClient: PrismaClient){}
 
-    save(){
-        console.log("Save user with connection name: ", this.connection.getName());
+    async save(firstName: string, lastName: string) {
+        return this.prismaClient.user.create({
+            data: {
+                firstName: firstName,
+                lastName: lastName
+            }
+        });
     }
-}
-
-export function createUserRepository(connection:Connection){
-    const repository = new UserRepository();
-    repository.connection = connection;
-    return repository
 }

@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { Connection } from '../connection/connection';
 import { Mail } from '../mail/mail';
 import { UserRepository } from '../user-repository/user-repository';
+import { User } from '@prisma/client';
 
 @Controller('/api/users')
 export class UserController {
@@ -14,9 +15,14 @@ export class UserController {
         private UserRepository: UserRepository
     ){}
 
+    @Get("/create")
+    async createUser(@Query("first_name") firstName:string, @Query("last_name") lastName:string){
+        return await this.UserRepository.save(firstName, lastName);
+
+    }
+
     @Get("learn-dependency-injection4")
     learnDependencyInjection4(){
-        this.UserRepository.save();
         return this.connection.getName();
     }
 
